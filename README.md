@@ -1,61 +1,46 @@
-# test_lib
+# Adafruit LSM303_U
 
-A Particle library for test_lib
+A port to Particle of Adafruit's [LSM303DLHC Library](https://github.com/adafruit/Adafruit_LSM303DLHC). Ported on April 2017, tested on the Particle Photon. 
 
-## Welcome to your library!
+This driver is for the Adafruit LSM303 Breakout (http://www.adafruit.com/products/1120), and is based on Adafruit's Unified Sensor Library (Adafruit_Sensor).
 
-To get started, modify the sources in [src](src). Rename the example folder inside [examples](examples) to a more meaningful name and add additional examples in separate folders.
+## About the LSM303 ##
 
-To compile your example you can use `particle compile examples/usage` command in [Particle CLI](https://docs.particle.io/guide/tools-and-features/cli#update-your-device-remotely) or use our [Desktop IDE](https://docs.particle.io/guide/tools-and-features/dev/#compiling-code).
+The LSM303 is a digital (I2C) accelerometer and digital compass (magnetometer).  The accelerometer allows you to measure acceleration or direction towards the center or the earth, and the magnetometer measure magnetic force, which is useful to detect magnetic north.
 
-Libraries can also depend on other libraries. To add a dependency use [`particle library add`](https://docs.particle.io/guide/tools-and-features/cli#adding-a-library) or [library management](https://docs.particle.io/guide/tools-and-features/dev/#managing-libraries) in Desktop IDE.
+More information on the LSM303 can be found in the datasheet: http://www.adafruit.com/datasheets/LSM303DLHC.PDF
 
-After the library is done you can upload it with `particle library upload` or `Upload` command in the IDE. This will create a private (only visible by you) library that you can use in other projects. If you wish to make your library public, use `particle library publish` or `Publish` command.
+## What is the Adafruit Unified Sensor Library? ##
 
-_TODO: update this README_
+The Adafruit Unified Sensor Library (**Adafruit_Sensor**) provides a common interface and data type for any supported sensor.  It defines some basic information about the sensor (sensor limits, etc.), and returns standard SI units of a specific type and scale for each supported sensor type.
 
-## Usage
+It provides a simple abstraction layer between your application and the actual sensor HW, allowing you to drop in any comparable sensor with only one or two lines of code to change in your project (essentially the constructor since the functions to read sensor data and get information about the sensor are defined in the base Adafruit_Sensor class).
 
-Connect XYZ hardware, add the test_lib library to your project and follow this simple example:
+This is imporant useful for two reasons:
 
-```
-#include "test_lib.h"
-Test_lib test_lib;
+1.) You can use the data right away because it's already converted to SI units that you understand and can compare, rather than meaningless values like 0..1023.
 
-void setup() {
-  test_lib.begin();
-}
+2.) Because SI units are standardised in the sensor library, you can also do quick sanity checks working with new sensors, or drop in any comparable sensor if you need better sensitivity or if a lower cost unit becomes available, etc. 
 
-void loop() {
-  test_lib.process();
-}
-```
+Light sensors will always report units in lux, gyroscopes will always report units in rad/s, etc. ... freeing you up to focus on the data, rather than digging through the datasheet to understand what the sensor's raw numbers really mean.
 
-See the [examples](examples) folder for more details.
+## About this Driver ##
 
-## Documentation
+Adafruit invests time and resources providing this open source code.  Please support Adafruit and open-source hardware by purchasing products from Adafruit!
 
-TODO: Describe `Test_lib`
+Written by Kevin (KTOWN) Townsend for Adafruit Industries, ported by Noam Zomerfeld
 
-## Contributing
 
-Here's how you can make changes to this library and eventually contribute those changes back.
+## Wiring
 
-To get started, [clone the library from GitHub to your local machine](https://help.github.com/articles/cloning-a-repository/).
+The Photon use D0 for SDA and D1 for SCL, unlike other Arduinos.
 
-Change the name of the library in `library.properties` to something different. You can add your name at then end.
+Connect: 
+- VIN to 3.3V (or 5v from VIN on the Photon, the LSM303DLHC is 5V tolerant)
+- GND to GND
+- SDA to D1
+- SCL to D0
 
-Modify the sources in <src> and <examples> with the new behavior.
+See the [examples](examples) folder for usage for the compass or the accelerometer.
 
-To compile an example, use `particle compile examples/usage` command in [Particle CLI](https://docs.particle.io/guide/tools-and-features/cli#update-your-device-remotely) or use our [Desktop IDE](https://docs.particle.io/guide/tools-and-features/dev/#compiling-code).
 
-After your changes are done you can upload them with `particle library upload` or `Upload` command in the IDE. This will create a private (only visible by you) library that you can use in other projects. Do `particle library add test_lib_myname` to add the library to a project on your machine or add the test_lib_myname library to a project on the Web IDE or Desktop IDE.
-
-At this point, you can create a [GitHub pull request](https://help.github.com/articles/about-pull-requests/) with your changes to the original library. 
-
-If you wish to make your library public, use `particle library publish` or `Publish` command.
-
-## LICENSE
-Copyright 2017 me
-
-Licensed under the <insert your choice of license here> license
